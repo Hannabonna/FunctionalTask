@@ -27,10 +27,12 @@ namespace FunctionalTask
             var mostGrades = grades.Mode();
             Console.WriteLine(mostGrades);
             
-            // var satu = 1.Convert();
-            // var belasan = 12.Convert();
-            // var puluhan = 30.Convert();
-            // Console.Writeline(satu)
+            var satu = 1.Convert();
+            var belasan = 12.Convert();
+            var puluhan = 30.Convert();
+            Console.WriteLine(satu);
+            Console.WriteLine(belasan);
+            Console.WriteLine(puluhan);
 
             var hu = "ini adalah tulisan yang sangat panjang".Trim(8);
             Console.WriteLine(hu);
@@ -56,6 +58,30 @@ namespace FunctionalTask
         public static T Mode<T>(this IEnumerable <T> values)
         {
             return (values.GroupBy(H => H).OrderByDescending(H => H.Count()).Select(H=>H.Key)).First();
+        }
+
+        public static string Convert(this int number)
+        {
+            string words = "";
+
+            if (number > 0)
+            {
+                if (words != "")
+                    words += " ";
+
+                var unitsMap = new[] { "nol", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas", "duabelas", "tigabelas", "empat belas", "lima belas", "enam belas", "tujuh belas", "delapan belas", "sembilan belas" };
+                var tensMap = new[] { "nol", "sepuluh", "dua puluh", "tiga puluh", "empat puluh", "lima puluh", "enam puluh", "tujuh puluh", "delapan puluh", "sembilan puluh" };
+
+                if (number < 20)
+                    words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0)
+                        words += " " + unitsMap[number % 10];
+                }
+            }
+            return words;
         }
 
         public static string Trim(this string text, int i)
